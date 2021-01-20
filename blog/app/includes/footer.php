@@ -64,7 +64,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© Ehtesham Qureshi | Designed and Developed by Ehtesham Qureshi</p>
+      <p>© Designed and Developed by Ehtesham Qureshi</p>
     </div>
   </div>
   <!-- // FOOTER -->

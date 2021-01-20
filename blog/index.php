@@ -19,6 +19,7 @@ if (isset($_GET['t_id'])) {
 else if (isset($_GET['i_id'])) {
   $posts = getProjectsByInstituteID($_GET['i_id']);
   $postTitle = "You searched for projects under '" . $_GET['name'] . "'"; //changing the title of page when click on specific topic
+  // dd($posts);
 } else {
   $posts = getPublishedPosts();
   // dd($posts);
@@ -105,7 +106,7 @@ else if (isset($_GET['i_id'])) {
                 &nbsp;
                 <i class="fa fa-calendar"></i> <?php echo date('F j,Y', strtotime($post['created_at'])); ?>
                 <br>
-                <i class="fa fa-university" aria-hidden="true"></i><?php echo $post['username']; ?>
+                <i class="fa fa-university" aria-hidden="true"></i><?php echo $post['name']; ?>
               </div>
               <p class="post-body"><?php echo html_entity_decode(substr($post['body'], 0, 150) . '...'); ?>
               </p>

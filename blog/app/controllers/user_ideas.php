@@ -11,6 +11,23 @@ $institutes = selectAll('institutes');
 // Fecting project data form projects table
 $published_value = 1;
 $ideas = selectAll($table, ['published' => $published_value]);
+
+function getideaswithusername()
+{
+    global $conn;
+    // SELECT FROM POSTS WHERE PUBLISHED = 1;
+    // $sql = "SELECT p.*, u.username FROM projects AS p JOIN users AS u ON p.user_id = u.id WHERE p.published= ?";
+    // $sql = "SELECT p.*, u.username,i.name FROM projects AS p JOIN users AS u JOIN institutes AS i ON p.user_id = u.id WHERE p.published= ?";
+    // $sql = "SELECT p.*, u.username,i.name FROM projects p,users u, institutes i WHERE p.published= ?";
+    $sql = "SELECT ideas.*, users.username
+	FROM ideas 
+	JOIN users ON ideas.user_id = users.id
+	WHERE ideas.published= ?";
+    $stmt = executeQuery($sql, ['published' => 1]);                      //executes the data inserted
+    $ideaswithusername = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);     //fetch it and save it 
+    return $ideaswithusername;
+}
+
 $user_ideas = selectAll($table, ['user_id' => $_SESSION['id']]);
 // dd($ideas);
 

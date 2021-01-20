@@ -8,7 +8,11 @@ if (isset($_GET['id'])) {
 }
 $popularProjects = selectAll('projects', ['published' => 1]);
 $topics = selectAll('topics');
+// $institutes = selectAll('institutes');
 // dd($popularProjects);
+$ideaswithusername_ = getideaswithusername();
+// dd($ideaswithusername_);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,13 +50,13 @@ $topics = selectAll('topics');
             <div class="page-content">
 
 
-                <?php foreach ($ideas as $idea) : ?>
+                <?php foreach ($ideaswithusername_ as $idea) : ?>
                     <div class="post clearfix">
 
                         <div class="post-content">
                             <h2 class="post-title"><a href="single.php?idea_id=<?php echo $idea['id']; ?>"><?php echo $idea['title']; ?></a></h2>
                             <div class="post-info">
-                                <i class="fa fa-user-o"></i> <?php echo $idea['user_id']; ?>
+                                <i class="fa fa-user-o"></i> <?php echo $idea['username']; ?>
                                 &nbsp;
                                 <i class="fa fa-calendar"></i> <?php echo date('F j,Y', strtotime($idea['created_at'])); ?>
                                 <br>
@@ -104,7 +108,7 @@ $topics = selectAll('topics');
                     <ul>
                         <!--Using loop to show the Institutes fetched from database  -->
                         <?php foreach ($institutes as $key => $institute) : ?>
-                            <a href="<?php echo BASE_URL . '/index.php?i_id=' . $institutes['id'] . '&name=' . $institute['name']; ?>">
+                            <a href="<?php echo BASE_URL . '/index.php?i_id=' . $institute['id'] . '&name=' . $institute['name']; ?>">
                                 <li> <?php echo $institute['name']; ?></li>
                             </a>
                         <?php endforeach; ?>

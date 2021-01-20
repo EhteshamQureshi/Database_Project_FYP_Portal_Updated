@@ -189,12 +189,12 @@ function searchPosts($term)
 	// SELECT user search results
 	// Search Query
 	$sql = "SELECT
-	p.*, u.username
-	FROM projects AS p
-	JOIN users AS u
-	ON p.user_id = u.id 
-	WHERE p.published= ?
-	AND p.title LIKE ? OR p.body LIKE ?";
+	projects.*, users.username,institutes.name
+	FROM projects
+	JOIN users ON projects.user_id = users.id 
+    JOIN institutes ON projects.institute_id= institutes.id
+	WHERE projects.published= ?
+	AND projects.title LIKE ? OR projects.body LIKE ?";
 	//only published posts using query which matched the title and body of the project
 	$stmt = executeQuery($sql, ['published' => 1, 'title' => $match, 'body' => $match]); //This will be insreted  in the above query ? where placeholders
 	$records = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); 	//fetch it and save it 
@@ -238,11 +238,12 @@ function getProjectsByTopicID($topic_id)
 {
 	global $conn;
 	// SELECT FROM POSTS WHERE PUBLISHED = 1;
-	$sql = "SELECT p.*, u.username 
-	FROM projects AS p 
-	JOIN users AS u ON p.user_id = u.id 
-	WHERE p.published= ? 
-	AND p.topic_id = ?";
+	$sql = "SELECT projects.*, users.username,institutes.name 
+	FROM projects 
+	JOIN users ON projects.user_id = users.id 
+ 	JOIN institutes ON projects.institute_id = institutes.id
+	WHERE projects.published= ? 
+	AND projects.topic_id = ?";
 	$stmt = executeQuery($sql, ['published' => 1, 'topic_id' => $topic_id]); 					 //executes the data inserted
 	$records = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); 	//fetch it and save it 
 	return $records;
@@ -263,7 +264,12 @@ function getProjectsByInstituteID($institute_id)
 {
 	global $conn;
 	// SELECT FROM POSTS WHERE PUBLISHED = 1;
-	$sql = "SELECT p.*, u.username FROM projects AS p JOIN users AS u ON p.user_id = u.id WHERE p.published= ? AND p.institute_id = ?";
+	$sql = "SELECT projects.*, users.username ,institutes.name 
+	FROM projects 
+	JOIN users ON projects.user_id = users.id 
+	JOIN institutes ON projects.institute_id = institutes.id 
+	WHERE projects.published= ? 
+	AND projects.institute_id = ?";
 	$stmt = executeQuery($sql, ['published' => 1, 'topic_id' => $institute_id]); 					 //executes the data inserted
 	$records = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); 	//fetch it and save it 
 	return $records;
